@@ -56,7 +56,7 @@ flowchart TD
 
 <img width="1678" height="455" alt="image" src="https://github.com/user-attachments/assets/66ab5843-9e34-4f85-adcd-ed031d4708aa" />
 
-### D/ Code
+### D/ YAML Code
 
 NB : sensor is based on esp-idf framework to allow usage of bluetooth proxy and 802.11k / 802.11v wifi mesh. adjust to your needs
   
@@ -489,4 +489,44 @@ button:
     name: "Redémarrer ESP32 Pellets"
     icon: "mdi:restart"
 
+```
+
+### C++ Sensor 
+
+```
+#include "esphome.h"
+#include <algorithm>
+
+// Buffer global physique pour 120 points (60 minutes de données)
+static float global_pente_buffer[120] = {0}; 
+
+float compute_theil_sen_circular(int n, int head, int size) {
+    if (n < 3) return 0.0f;
+
+    // Capacité maximale pour n=120 points (7140 pentes)
+    const int MAX_SLOPES = 7140;
+    static float slopes[MAX_SLOPES]; 
+    int k = 0;
+    
+    // Calcul de l'index de départ dans le buffer circulaire
+    int start_idx = (head - n + size) % size;
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            float y_i = global_pente_buffer[(start_idx + i) % size];
+            float y_j = global_pente_buffer[(start_idx + j) % size];
+            
+            if (k < MAX_SLOPES) {
+                // Pente = Delta Distance / Delta Temps (en unités d'index)
+                slopes[k++] = (y_j - y_i) / (float)(j - i);
+            }
+        }
+    }
+
+    if (k == 0) return 0.0f;
+
+    // Recherche de la médiane par tri partiel (O(n) moyen)
+    std::nth_element(slopes, slopes + k / 2, slopes + k);
+    return slopes[k / 2];
+}
 ```
