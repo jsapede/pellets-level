@@ -1,6 +1,10 @@
 # pellets-level
 
-The scope of this repo is to archive a method for pellets level measurement and statistical analysis based on a simple ultrasonic sensor :
+The scope of this repo is to archive a method for pellets level measurement and statistical analysis based on a simple ultrasonic sensor.
+
+Sensor is fixed ont the reservoir cover, towards pellets surface.
+
+Difficulty emerges from the pellets surface witch is not plane but changes when the stove consumes pellets that are extraxcted at he botom of the reservoir, crating holes and refills when pellets rolls down. Additionnally, reservoir is a metallic enclosure generating echoes and nois on ultrasonic measurements.
 
 ### A/ Principles
 
