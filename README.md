@@ -1,6 +1,9 @@
 # pellets-level
 
-The scope of this repo is to archive a method for pellets level measurement and statistical analysis based on a simple ultrasonic sensor.
+The scope of this repo is to archive a method for pellets level measurement and statistical analysis based on a cheap HC-SR04 ultrasonic sensor.
+
+<img width="599" height="440" alt="image" src="https://github.com/user-attachments/assets/c4fb4336-bbde-4205-8cf9-1445b48e06c3" />
+
 
 Sensor is fixed ont the reservoir cover, towards pellets surface.
 
